@@ -204,18 +204,15 @@
                 </div>
             </div>
         </section>
+
+        <footer class="py-6 text-center bg-red-900">
+            <p class="text-sm font-serif text-amber-200">
+                © 2025 <a href="https://jazaniest.vercel.app">JZX's Code</a>. All Rights Reserved.
+            </p>
+        </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        const galleryImages = [
-            "https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Couple portrait
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding couple
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding dress
-            "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Rings
-            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Couple outdoor
-            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding bouquet
-            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding shoes
-            "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"  // Wedding details
-        ];
 
         function startCountdown() {
             const weddingDate = new Date('2025-09-15T09:30:00').getTime();
@@ -241,7 +238,6 @@
             }, 1000);
         }
 
-        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -255,7 +251,6 @@
             });
         });
 
-        // Music control (optional)
         let musicPlaying = true;
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
@@ -269,35 +264,19 @@
         }
 
         function openMap() {
-            // Opens Google Maps with the wedding location
             const mapUrl = "https://maps.app.goo.gl/2BKQojZaAqJxFuZv8";
             window.open(mapUrl, '_blank');
         }
 
-        
-        // Initialize AOS
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     AOS.init({
-        //         duration: 800,
-        //         easing: 'ease-out-cubic',
-        //         once: true,
-        //         offset: 100,
-        //         disable: false
-        //     });
-        // });
-
-        // Refresh AOS when main content is shown
         function openInvitation() {
             document.getElementById('cover').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
             
-            // Play background music
             const music = document.getElementById('bgMusic');
             music.play().catch(e => console.log('Audio play failed:', e));
             
             startCountdown();
             
-            // Inisialisasi AOS setelah konten ditampilkan dengan sedikit delay
             setTimeout(() => {
                 AOS.init({
                     duration: 800,
