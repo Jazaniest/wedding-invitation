@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Rani & Hamdan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+
+        .bg-pattern {
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+        }
+
+        .ornament {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23800020' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gradient-to-br from-amber-50 via-rose-50 to-amber-50">
+    <div id="cover" class="relative flex items-center justify-center min-h-screen overflow-hidden bg-pattern">
+        <img src="placeholder-background-bunga.jpg" alt="Latar Belakang Bunga" class="absolute inset-0 object-cover w-full h-full opacity-30 -z-10">
+        <div class="absolute inset-0 ornament opacity-30"></div>
+
+        <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kiri Atas" class="absolute top-0 left-0 w-48 pointer-events-none md:w-64 opacity-80">
+        <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kanan Bawah" class="absolute bottom-0 right-0 w-48 transform pointer-events-none md:w-64 opacity-80 -scale-x-100 -scale-y-100">
+
+        <div class="z-10 max-w-lg px-6 text-center">
+            <div class="mb-8">
+                <h3 class="mb-2 font-serif text-lg text-amber-700">Undangan Pernikahan</h3>
+                <div class="w-20 h-px mx-auto mb-4 bg-amber-600"></div>
+                <h1 class="mb-2 text-6xl text-red-900 font-script">Rani</h1>
+                <div class="mb-2 font-serif text-2xl text-amber-700">&</div>
+                <h1 class="mb-6 text-6xl text-red-900 font-script">Hamdan</h1>
+                <div class="w-20 h-px mx-auto mb-6 bg-amber-600"></div>
+                <p class="mb-8 font-serif italic text-amber-800">
+                    "Dan di antara tanda-tanda-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."
+                </p>
+                <p class="text-sm text-amber-700">(QS. Ar-Rum: 21)</p>
+            </div>
+
+            <button onclick="openInvitation()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
+                <i class="mr-2 fas fa-heart"></i>
+                Buka Undangan
+            </button>
+        </div>
+
+        <audio id="bgMusic" loop>
+            <source src="bergema.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div id="mainContent" class="hidden">
+        <section class="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-amber-50 to-rose-50 bg-pattern">
+            <img src="ornamen-bunga2.png" alt="Hiasan Bunga Sudut Kanan Atas" class="absolute top-0 right-0 w-40 pointer-events-none md:w-56 opacity-70">
+
+            <img src="ornamen-bunga2.png" alt="Hiasan Bunga Sudut Kiri Bawah" class="absolute bottom-0 left-0 w-40 transform pointer-events-none md:w-56 opacity-70 -scale-x-100 -scale-y-100">
+
+            <div class="z-10 max-w-4xl px-6 text-center">
+                <div class="mb-12">
+                    <h3 class="mb-4 font-serif text-xl text-amber-700" data-aos="fade-up" data-aos-delay="300">The Wedding of</h3>
+                    <h1 class="mb-4 text-red-900 font-script text-7xl" data-aos="zoom-in" data-aos-delay="500">Zakiyatul Khoirani</h1>
+                    <div class="mb-4 font-serif text-3xl text-amber-700" data-aos="flip-left" data-aos-delay="700">&</div>
+                    <h1 class="mb-8 text-red-900 font-script text-7xl" data-aos="zoom-in" data-aos-delay="900">Hamdan Junaidi</h1>
+
+                    <div id="countdown" class="max-w-md p-6 mx-auto mb-8 shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="fade-up" data-aos-delay="1100">
+                        <h3 class="mb-4 font-serif text-lg text-red-900">Menuju Hari Bahagia</h3>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div class="p-3 text-white bg-red-900 rounded-lg"><div id="days" class="text-2xl font-bold">00</div><div class="text-xs">Hari</div></div>
+                            <div class="p-3 text-white bg-red-900 rounded-lg"><div id="hours" class="text-2xl font-bold">00</div><div class="text-xs">Jam</div></div>
+                            <div class="p-3 text-white bg-red-900 rounded-lg"><div id="minutes" class="text-2xl font-bold">00</div><div class="text-xs">Menit</div></div>
+                            <div class="p-3 text-white bg-red-900 rounded-lg"><div id="seconds" class="text-2xl font-bold">00</div><div class="text-xs">Detik</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 text-amber-700 animate-bounce">
+                <i class="text-2xl fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section class="relative py-20 overflow-hidden bg-white">
+            <div class="max-w-6xl px-6 mx-auto">
+                <div class="mb-16 text-center" data-aos="fade-down">
+                    <h2 class="mb-4 text-5xl text-red-900 font-script">Mempelai</h2>
+                    <div class="w-24 h-px mx-auto bg-amber-600"></div>
+                </div>
+
+                <div class="grid items-center gap-8 md:grid-cols-5 md:gap-0">
+                    <div class="text-center md:col-span-2" data-aos="fade-right" data-aos-delay="300">
+                        <div class="mb-8"><div class="w-64 h-64 mx-auto overflow-hidden rounded-full shadow-2xl bg-gradient-to-br from-red-900 to-red-700"><img src="Rani.jpg" alt="Zakiyatul Khoirani" class="object-cover w-full h-full"></div></div>
+                        <h3 class="mb-2 text-4xl text-red-900 font-script">Zakiyatul Khoirani</h3>
+                        <p class="mb-4 font-serif text-amber-800">(Rani)</p>
+                        <p class="mb-2 text-gray-600">Putri dari</p>
+                        <p class="font-semibold text-red-900">Bapak Mukhtarom S.Pdi</p>
+                        <p class="font-semibold text-red-900">& Ibu Sariani</p>
+                    </div>
+
+                    <div class="items-center justify-center hidden md:flex">
+                        <img src="placeholder-bunga-pemisah.png" alt="Pemisah Bunga" class="w-32 transform -rotate-45 opacity-70">
+                    </div>
+
+                    <div class="text-center md:col-span-2" data-aos="fade-left" data-aos-delay="600">
+                        <div class="mb-8"><div class="w-64 h-64 mx-auto overflow-hidden rounded-full shadow-2xl bg-gradient-to-br from-red-900 to-red-700"><img src="Hamdan.jpg" alt="Hamdan Junaidi" class="object-cover w-full h-full"></div></div>
+                        <h3 class="mb-2 text-4xl text-red-900 font-script">Hamdan Junaidi</h3>
+                        <p class="mb-4 font-serif text-amber-800">(Hamdan)</p>
+                        <p class="mb-2 text-gray-600">Putra dari</p>
+                        <p class="font-semibold text-red-900">Bapak Saptono</p>
+                        <p class="font-semibold text-red-900">& Ibu Poniah</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative py-20 overflow-hidden bg-gradient-to-br from-amber-50 to-rose-50 bg-pattern">
+            <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kiri Atas Bawah" class="absolute w-48 pointer-events-none -top-10 -left-12 md:w-64 opacity-40 -z-0">
+            <img src="ornamen-bunga3.png" alt="Hiasan Bunga Sudut Kanan Atas Bawah" class="absolute w-48 pointer-events-none -bottom-10 -right-12 md:w-64 opacity-40 -z-0">
+
+            <div class="relative z-10 max-w-4xl px-6 mx-auto">
+                <div class="mb-16 text-center" data-aos="fade-up">
+                    <h2 class="mb-4 text-5xl text-red-900 font-script">Acara Pernikahan</h2>
+                    <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
+                    <p class="italic text-amber-800">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami</p>
+                </div>
+
+                <div class="grid gap-8 md:grid-cols-2">
+                    <div class="p-8 text-center shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="flip-left" data-aos-delay="300">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto mb-6 bg-red-900 rounded-full"><i class="text-2xl text-white fas fa-ring"></i></div>
+                        <h3 class="mb-4 font-serif text-2xl text-red-900">Akad Nikah</h3>
+                        <div class="space-y-2 text-gray-700">
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-calendar text-amber-600"></i>Minggu, 14 September 2025</p>
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-clock text-amber-600"></i>14:00 WIB - Selesai</p>
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-map-marker-alt text-amber-600"></i>RT 07 RW 04, Parit 3, Sabak Permai</p>
+                        </div>
+                    </div>
+
+                    <div class="p-8 text-center shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="flip-right" data-aos-delay="600">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto mb-6 bg-red-900 rounded-full"><i class="text-2xl text-white fas fa-glass-cheers"></i></div>
+                        <h3 class="mb-4 font-serif text-2xl text-red-900">Resepsi</h3>
+                        <div class="space-y-2 text-gray-700">
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-calendar text-amber-600"></i>Senin, 15 September 2025</p>
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-clock text-amber-600"></i>09:30 WIB - Selesai</p>
+                            <p class="flex items-center justify-center"><i class="mr-2 fas fa-map-marker-alt text-amber-600"></i>RT 07 RW 04, Parit 3, Sabak Permai</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <section class="py-20 bg-white">
+            <div class="max-w-4xl px-6 mx-auto">
+                <div class="mb-16 text-center" data-aos="fade-down">
+                    <h2 class="mb-4 text-5xl text-red-900 font-script">Lokasi</h2>
+                    <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
+                </div>
+                
+                <div class="overflow-hidden shadow-lg rounded-2xl" data-aos="zoom-in">
+                    <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d888.4697443301256!2d102.09187553342694!3d1.0920217459647479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1756224545591!5m2!1sen!2sid" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="mt-12 text-center">
+                <button onclick="openMap()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
+                    <i class="mr-2 fas fa-map"></i>Lihat Peta Lokasi
+                </button>
+            </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-6xl px-6 mx-auto">
+                <div class="mb-16 text-center" data-aos="fade-down">
+                    <h2 class="mb-4 text-5xl text-red-900 font-script">Galeri Foto</h2>
+                    <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+                    <div class="relative overflow-hidden shadow-lg cursor-pointer group aspect-square rounded-xl"><img src="foto1.JPG" alt="Gallery 1" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-black/0 group-hover:bg-black/20"><i class="text-2xl text-white transition-opacity duration-300 opacity-0 fas fa-search-plus group-hover:opacity-100"></i></div></div>
+                    <div class="relative overflow-hidden shadow-lg cursor-pointer group aspect-square rounded-xl"><img src="foto2.JPG" alt="Gallery 2" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-black/0 group-hover:bg-black/20"><i class="text-2xl text-white transition-opacity duration-300 opacity-0 fas fa-search-plus group-hover:opacity-100"></i></div></div>
+                </div>
+            </div>
+        </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Couple portrait
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding couple
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding dress
+            "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Rings
+            "https://images.unsplash.com/photo-1537633552985-df8429e8048b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Couple outdoor
+            "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding bouquet
+            "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", // Wedding shoes
+            "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"  // Wedding details
+        ];
+
+        function startCountdown() {
+            const weddingDate = new Date('2025-09-15T09:30:00').getTime();
+            
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown').innerHTML = '<p class="font-serif text-xl text-red-900">Hari Bahagia Telah Tiba!</p>';
+                }
+            }, 1000);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Music control (optional)
+        let musicPlaying = true;
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            if (musicPlaying) {
+                music.pause();
+                musicPlaying = false;
+            } else {
+                music.play().catch(e => console.log('Audio play failed:', e));
+                musicPlaying = true;
+            }
+        }
+
+        function openMap() {
+            // Opens Google Maps with the wedding location
+            const mapUrl = "https://maps.app.goo.gl/2BKQojZaAqJxFuZv8";
+            window.open(mapUrl, '_blank');
+        }
+
+        
+        // Initialize AOS
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     AOS.init({
+        //         duration: 800,
+        //         easing: 'ease-out-cubic',
+        //         once: true,
+        //         offset: 100,
+        //         disable: false
+        //     });
+        // });
+
+        // Refresh AOS when main content is shown
+        function openInvitation() {
+            document.getElementById('cover').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+            
+            // Play background music
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log('Audio play failed:', e));
+            
+            startCountdown();
+            
+            // Inisialisasi AOS setelah konten ditampilkan dengan sedikit delay
+            setTimeout(() => {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 100,
+                    disable: false
+                });
+            }, 100);
+        }
+    </script>
+
+</body>
+</html>
