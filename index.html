@@ -50,6 +50,7 @@
                 <div class="mb-2 font-serif text-2xl text-amber-700">&</div>
                 <h1 class="mb-6 text-6xl text-red-900 font-script">Hamdan</h1>
                 <div class="w-20 h-px mx-auto mb-6 bg-amber-600"></div>
+                <p class="mb-8 font-serif italic text-amber-800">Kepada Yth : <span id="nama-undangan">Tamu</span></p>
                 <p class="mb-8 font-serif italic text-amber-800">
                     "Dan di antara tanda-tanda-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."
                 </p>
@@ -216,6 +217,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const nama = params.get('nama') || 'Tamu';
+        document.getElementById('nama-undangan').textContent = nama;
 
         function startCountdown() {
             const weddingDate = new Date('2025-09-15T09:30:00').getTime();
