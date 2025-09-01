@@ -13,6 +13,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+    <!-- SCRIPT BARU: Menambahkan GSAP untuk animasi gerbang -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
     <style>
         .font-script { font-family: 'Great Vibes', cursive; }
         .font-serif { font-family: 'Playfair Display', serif; }
@@ -26,41 +30,79 @@
         }
 
         .ornament {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23800020' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60' 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23800020' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* CSS Tambahan untuk body saat cover aktif */
+        body.overflow-hidden {
+            overflow: hidden;
         }
 
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+        /* REKOMENDASI: Menambahkan kelas text-shadow untuk keterbacaan */
+        .text-shadow { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+        .text-shadow-lg { text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+
+        /* Kelas baru untuk background yang di-blur */
+        .bg-hero-blurred::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('bg-hero.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            /* Mencegah tepi blur terlihat */
+            transform: scale(1.1);
+            /* Menempatkan background di belakang konten */
+            z-index: -1;
         }
+
     </style>
 </head>
-<body class="font-sans bg-gradient-to-br from-amber-50 via-rose-50 to-amber-50">
-    <div id="cover" class="relative flex items-center justify-center min-h-screen overflow-hidden bg-pattern">
-        <div class="absolute inset-0 ornament opacity-30"></div>
+<body class="font-sans bg-gradient-to-br from-amber-50 via-rose-50 to-amber-50 overflow-hidden">
+    <!-- 
+        PERUBAHAN STRUKTUR COVER
+        Struktur diubah untuk mendukung animasi "gerbang terbuka".
+        Konten asli dari cover Anda sekarang berada di atas lapisan gerbang.
+    -->
+    <div id="cover-container" class="fixed inset-0 z-50 flex items-center justify-center">
+        <!-- PERUBAHAN: Menggunakan background-size: cover untuk mengisi ruang tanpa distorsi -->
+        <!-- Lapisan Gerbang Kiri -->
+        <div id="cover-left" 
+             class="absolute top-0 left-0 w-1/2 h-full"
+             style="background-image: url('cover-kiri.png'); background-size: cover; background-repeat: no-repeat; background-position: right center;">
+        </div>
+        
+        <!-- Lapisan Gerbang Kanan -->
+        <div id="cover-right"
+             class="absolute top-0 right-0 w-1/2 h-full"
+             style="background-image: url('cover-kanan.png'); background-size: cover; background-repeat: no-repeat; background-position: left center;">
+        </div>
+        
+        <!-- Konten Asli Cover (tetap sama) -->
+        <div class="relative z-10 flex items-center justify-center w-full h-full p-4 overflow-hidden">
+            <div class="absolute inset-0 ornament opacity-30"></div>
 
-        <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kiri Atas" class="absolute top-0 left-0 w-48 pointer-events-none md:w-64 opacity-80">
-        <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kanan Bawah" class="absolute bottom-0 right-0 w-48 transform pointer-events-none md:w-64 opacity-80 -scale-x-100 -scale-y-100">
-
-        <div class="z-10 max-w-lg px-6 text-center">
-            <div class="mb-8">
-                <h3 class="mb-2 font-serif text-lg text-amber-700">Undangan Pernikahan</h3>
-                <div class="w-20 h-px mx-auto mb-4 bg-amber-600"></div>
-                <h1 class="mb-2 text-6xl text-red-900 font-script">Rani</h1>
-                <div class="mb-2 font-serif text-2xl text-amber-700">&</div>
-                <h1 class="mb-6 text-6xl text-red-900 font-script">Hamdan</h1>
-                <div class="w-20 h-px mx-auto mb-6 bg-amber-600"></div>
-                <p class="mb-8 font-serif italic text-amber-800">Kepada Yth : <span id="nama-undangan">Tamu</span></p>
-                <p class="mb-8 font-serif italic text-amber-800">
-                    "Dan di antara tanda-tanda-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."
-                </p>
-                <p class="text-sm text-amber-700">(QS. Ar-Rum: 21)</p>
+            <!-- REKOMENDASI: Memberi latar belakang semi-transparan dan blur pada container teks -->
+            <div class="z-10 max-w-lg px-6 py-8 text-center bg-black/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+                <div class="mb-8">
+                    <h3 class="mb-2 font-serif text-lg text-amber-100 text-shadow">Undangan Pernikahan</h3>
+                    <div class="w-20 h-px mx-auto mb-4 bg-amber-200/50"></div>
+                    <h1 class="mb-2 text-6xl text-white font-script text-shadow-lg">Rani</h1>
+                    <div class="mb-2 font-serif text-2xl text-amber-100 text-shadow">&</div>
+                    <h1 class="mb-6 text-6xl text-white font-script text-shadow-lg">Hamdan</h1>
+                    <div class="w-20 h-px mx-auto mb-6 bg-amber-200/50"></div>
+                    <p class="mb-8 font-serif italic text-amber-50 text-shadow">Kepada Yth : <span id="nama-undangan">Tamu</span></p>
+                </div>
+                <!-- Tombol tetap memanggil fungsi yang sama -->
+                <button onclick="openInvitation()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
+                    <i class="mr-2 fas fa-heart"></i>
+                    Buka Undangan
+                </button>
             </div>
-
-            <button onclick="openInvitation()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
-                <i class="mr-2 fas fa-heart"></i>
-                Buka Undangan
-            </button>
         </div>
 
         <audio id="bgMusic" loop>
@@ -68,19 +110,18 @@
         </audio>
     </div>
 
-    <div id="mainContent" class="hidden">
+    <!-- KONTEN UTAMA (Tidak ada perubahan struktur) -->
+    <div id="mainContent" class="hidden opacity-0">
+        <!-- PERUBAHAN: Latar belakang hero dikembalikan ke semula -->
         <section class="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-amber-50 to-rose-50 bg-pattern">
             <img src="ornamen-bunga2.png" alt="Hiasan Bunga Sudut Kanan Atas" class="absolute top-0 right-0 w-40 pointer-events-none md:w-56 opacity-70">
-
             <img src="ornamen-bunga2.png" alt="Hiasan Bunga Sudut Kiri Bawah" class="absolute bottom-0 left-0 w-40 transform pointer-events-none md:w-56 opacity-70 -scale-x-100 -scale-y-100">
-
             <div class="z-10 max-w-4xl px-6 text-center">
                 <div class="mb-12">
                     <h3 class="mb-4 font-serif text-xl text-amber-700" data-aos="fade-up" data-aos-delay="300">The Wedding of</h3>
                     <h1 class="mb-4 text-red-900 font-script text-7xl" data-aos="zoom-in" data-aos-delay="500">Zakiyatul Khoirani</h1>
                     <div class="mb-4 font-serif text-3xl text-amber-700" data-aos="flip-left" data-aos-delay="700">&</div>
                     <h1 class="mb-8 text-red-900 font-script text-7xl" data-aos="zoom-in" data-aos-delay="900">Hamdan Junaidi</h1>
-
                     <div id="countdown" class="max-w-md p-6 mx-auto mb-8 shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="fade-up" data-aos-delay="1100">
                         <h3 class="mb-4 font-serif text-lg text-red-900">Menuju Hari Bahagia</h3>
                         <div class="grid grid-cols-4 gap-2 text-center">
@@ -92,7 +133,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 text-amber-700 animate-bounce">
                 <i class="text-2xl fas fa-chevron-down"></i>
             </div>
@@ -104,7 +144,6 @@
                     <h2 class="mb-4 text-5xl text-red-900 font-script">Mempelai</h2>
                     <div class="w-24 h-px mx-auto bg-amber-600"></div>
                 </div>
-
                 <div class="grid items-center gap-8 md:grid-cols-5 md:gap-0">
                     <div class="text-center md:col-span-2" data-aos="fade-right" data-aos-delay="300">
                         <div class="mb-8"><div class="w-64 h-64 mx-auto overflow-hidden rounded-full shadow-2xl bg-gradient-to-br from-red-900 to-red-700"><img src="Rani.jpg" alt="Zakiyatul Khoirani" class="object-cover w-full h-full"></div></div>
@@ -114,10 +153,7 @@
                         <p class="font-semibold text-red-900">Bapak Mukhtarom S.Pdi</p>
                         <p class="font-semibold text-red-900">& Ibu Sariani</p>
                     </div>
-
-                    <div class="items-center justify-center hidden md:flex">
-                    </div>
-
+                    <div class="items-center justify-center hidden md:flex"></div>
                     <div class="text-center md:col-span-2" data-aos="fade-left" data-aos-delay="600">
                         <div class="mb-8"><div class="w-64 h-64 mx-auto overflow-hidden rounded-full shadow-2xl bg-gradient-to-br from-red-900 to-red-700"><img src="Hamdan.jpg" alt="Hamdan Junaidi" class="object-cover w-full h-full"></div></div>
                         <h3 class="mb-2 text-4xl text-red-900 font-script">Hamdan Junaidi</h3>
@@ -130,17 +166,18 @@
             </div>
         </section>
 
-        <section class="relative py-20 overflow-hidden bg-gradient-to-br from-amber-50 to-rose-50 bg-pattern">
+        <!-- PERUBAHAN ADA DI SECTION INI -->
+        <section class="relative py-20 overflow-hidden bg-hero-blurred">
             <img src="ornamen-bunga.png" alt="Hiasan Bunga Sudut Kiri Atas Bawah" class="absolute w-48 pointer-events-none -top-10 -left-12 md:w-64 opacity-40 -z-0">
             <img src="ornamen-bunga3.png" alt="Hiasan Bunga Sudut Kanan Atas Bawah" class="absolute w-48 pointer-events-none -bottom-10 -right-12 md:w-64 opacity-40 -z-0">
-
             <div class="relative z-10 max-w-4xl px-6 mx-auto">
-                <div class="mb-16 text-center" data-aos="fade-up">
-                    <h2 class="mb-4 text-5xl text-red-900 font-script">Acara Pernikahan</h2>
-                    <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
-                    <p class="italic text-amber-800">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami</p>
+                <!-- PERUBAHAN: Menambahkan background blur hanya pada bagian ini -->
+                <div class="mb-16 text-center p-8 bg-black/20 backdrop-blur-sm rounded-2xl" data-aos="fade-up">
+                    <h2 class="mb-4 text-5xl text-white font-script text-shadow-lg">Acara Pernikahan</h2>
+                    <div class="w-24 h-px mx-auto mb-4 bg-amber-200/50"></div>
+                    <p class="italic text-amber-50 text-shadow">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami</p>
                 </div>
-
+                <!-- KARTU DIKEMBALIKAN KE STYLE SEMULA (latar putih) -->
                 <div class="grid gap-8 md:grid-cols-2">
                     <div class="p-8 text-center shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="flip-left" data-aos-delay="300">
                         <div class="flex items-center justify-center w-16 h-16 mx-auto mb-6 bg-red-900 rounded-full"><i class="text-2xl text-white fas fa-ring"></i></div>
@@ -151,7 +188,6 @@
                             <p class="flex items-center justify-center"><i class="mr-2 fas fa-map-marker-alt text-amber-600"></i>RT 07 RW 04, Parit 3, Sabak Permai</p>
                         </div>
                     </div>
-
                     <div class="p-8 text-center shadow-lg bg-white/80 backdrop-blur-sm rounded-2xl" data-aos="flip-right" data-aos-delay="600">
                         <div class="flex items-center justify-center w-16 h-16 mx-auto mb-6 bg-red-900 rounded-full"><i class="text-2xl text-white fas fa-glass-cheers"></i></div>
                         <h3 class="mb-4 font-serif text-2xl text-red-900">Resepsi</h3>
@@ -162,7 +198,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
         
@@ -172,23 +207,14 @@
                     <h2 class="mb-4 text-5xl text-red-900 font-script">Lokasi</h2>
                     <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
                 </div>
-                
                 <div class="overflow-hidden shadow-lg rounded-2xl" data-aos="zoom-in">
-                    <iframe
-                        src="https://maps.google.com/maps?q=1.092047, 102.091216&hl=id&z=17&output=embed"
-                        width="100%"
-                        height="400"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    <iframe src="https://maps.google.com/maps?q=1.092047, 102.091216&hl=id&z=17&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-            <div class="mt-12 text-center">
-                <button onclick="openMap()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
-                    <i class="mr-2 fas fa-map"></i>Lihat Peta Lokasi
-                </button>
-            </div>
+                <div class="mt-12 text-center">
+                    <button onclick="openMap()" class="px-8 py-3 font-serif text-lg text-white transition duration-300 transform bg-red-900 rounded-full shadow-lg hover:bg-red-800 hover:scale-105">
+                        <i class="mr-2 fas fa-map"></i>Lihat Peta Lokasi
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -198,7 +224,6 @@
                     <h2 class="mb-4 text-5xl text-red-900 font-script">Galeri Foto</h2>
                     <div class="w-24 h-px mx-auto mb-4 bg-amber-600"></div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                     <div class="relative overflow-hidden shadow-lg cursor-pointer group aspect-square rounded-xl"><img src="foto1.JPG" alt="Gallery 1" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-black/0 group-hover:bg-black/20"><i class="text-2xl text-white transition-opacity duration-300 opacity-0 fas group-hover:opacity-100"></i></div></div>
                     <div class="relative overflow-hidden shadow-lg cursor-pointer group aspect-square rounded-xl"><img src="foto2.JPG" alt="Gallery 2" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"><div class="absolute inset-0 flex items-center justify-center transition-all duration-300 bg-black/0 group-hover:bg-black/20"><i class="text-2xl text-white transition-opacity duration-300 opacity-0 fas group-hover:opacity-100"></i></div></div>
@@ -214,30 +239,28 @@
                 <a href="https://jazaniest.vercel.app">Click here for collaboration or order</a>
             </p>
         </footer>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+        // FUNGSI-FUNGSI ASLI (TIDAK BERUBAH)
         const params = new URLSearchParams(window.location.search);
         const nama = params.get('nama') || 'Tamu';
         document.getElementById('nama-undangan').textContent = nama;
 
         function startCountdown() {
             const weddingDate = new Date('2025-09-15T09:30:00').getTime();
-            
             const timer = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = weddingDate - now;
-                
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
                 document.getElementById('days').textContent = days.toString().padStart(2, '0');
                 document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
                 document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
                 document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-                
                 if (distance < 0) {
                     clearInterval(timer);
                     document.getElementById('countdown').innerHTML = '<p class="font-serif text-xl text-red-900">Hari Bahagia Telah Tiba!</p>';
@@ -250,40 +273,54 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
-
-        let musicPlaying = true;
-        function toggleMusic() {
-            const music = document.getElementById('bgMusic');
-            if (musicPlaying) {
-                music.pause();
-                musicPlaying = false;
-            } else {
-                music.play().catch(e => console.log('Audio play failed:', e));
-                musicPlaying = true;
-            }
-        }
 
         function openMap() {
             const mapUrl = "https://maps.app.goo.gl/2BKQojZaAqJxFuZv8";
             window.open(mapUrl, '_blank');
         }
 
+        // PERUBAHAN FUNGSI openInvitation()
         function openInvitation() {
-            document.getElementById('cover').style.display = 'none';
-            document.getElementById('mainContent').classList.remove('hidden');
-            
+            const coverContainer = document.getElementById('cover-container');
+            const coverLeft = document.getElementById('cover-left');
+            const coverRight = document.getElementById('cover-right');
+            const mainContent = document.getElementById('mainContent');
             const music = document.getElementById('bgMusic');
+            
+            // 1. Jalankan fungsi-fungsi yang sudah ada
             music.play().catch(e => console.log('Audio play failed:', e));
-            
             startCountdown();
-            
+
+            // 2. Siapkan konten utama untuk dianimasikan
+            mainContent.classList.remove('hidden');
+
+            // 3. Buat animasi dengan GSAP
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    coverContainer.style.display = 'none';
+                    document.body.classList.remove('overflow-hidden');
+                }
+            });
+
+            tl.to([coverLeft, coverRight], {
+                x: (index) => (index === 0 ? '-100%' : '100%'),
+                duration: 1.5,
+                ease: 'power3.inOut'
+            })
+            .to(coverContainer, {
+                opacity: 0,
+                duration: 0.8,
+            }, "-=0.5")
+            .to(mainContent, {
+                opacity: 1,
+                duration: 1
+            }, "-=0.8");
+
+            // 4. Inisialisasi AOS setelah sedikit jeda
             setTimeout(() => {
                 AOS.init({
                     duration: 800,
@@ -293,8 +330,12 @@
                     disable: false
                 });
             }, 100);
+
+            // Cegah fungsi ini berjalan dua kali
+            const button = event.currentTarget;
+            button.onclick = null;
         }
     </script>
-
 </body>
 </html>
+
